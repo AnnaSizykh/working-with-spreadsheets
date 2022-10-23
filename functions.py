@@ -58,7 +58,8 @@ def round_number(sheet, number_cell, decimal, result_cell):
 
 def exponentiation(sheet, number_cell, extent, result_cell):
     number = sheet[number_cell].value
-    if not isinstance(number, int) or not isinstance(number, float) or not isinstance(result_cell, int):
+    if not isinstance(number, int) or not isinstance(number, float) \
+            or not isinstance(extent, int) or not isinstance(extent, float):
         sheet[result_cell] = 'N/A'
         return 'N/A'
     result = number ** extent
@@ -78,8 +79,21 @@ def logarithm(sheet, number_cell, base, result_cell):
     return result
 
 
-def mean():
-    pass
+def mean(sheet, left_corner, right_corner, result_cell):
+    counter = 0
+    summa = 0
+    for cell_object in sheet[left_corner: right_corner]:
+        for cell in cell_object:
+            addend = cell.value
+            if isinstance(addend, int) or isinstance(addend, float):
+                summa += addend
+                counter += 1
+    if counter == 0:
+        sheet[result_cell] = 'N/A'
+        return 'N/A'
+    result = summa/counter
+    sheet[result_cell] = result
+    return result
 
 
 def use_math_module():
@@ -112,14 +126,50 @@ def compare(sheet, cell_1, cell_2, result_cell):
         return False
 
 
-def find():
+def find(sheet, element):
+    similar_results = []
+    for cell_object in sheet:
+        for cell in cell_object:
+            if element == cell.value or element in cell.value:
+                similar_results.append(cell.coordinate)
+    if len(similar_results) != 0:
+        return similar_results
+
+
+def sort(sheet, left_corner, right_corner):
     pass
 
 
-def sort():
-    pass
-
-
-def repeat_for_several_cells(sheet, function_name, first_start_cell, first_finish_cell, second_start_cell,
+def repeat_for_several_cells(sheet, function_name, first_start_cell, first_finish_cell, second_start_cell=None,
                              result_start_cell=None, additional_var=None):
-    pass
+    if sheet[first_start_cell].column != sheet[first_finish_cell].column:
+        return 'N/A'
+    result_row = None
+    result_column = None
+    second_row = 0
+    second_column = 0
+    if second_start_cell:
+        second_row = int(sheet[second_start_cell].row)
+        second_column = sheet[second_start_cell].column
+    for cell_object in sheet[first_start_cell: first_finish_cell]:
+        if function_name == 'delete':
+            delete(sheet, cell_object.coordinate)
+            continue
+        second_cell_coordinate = str(second_column) + str(second_row)
+        if result_start_cell:
+            result_row = int(sheet[result_start_cell].row)
+            result_column = sheet[result_start_cell].column
+            result_cell_coordinate = str(result_column) + str(result_row)
+            if function_name == 'subtraction':
+                subtraction(sheet, cell_object.coordinate, second_cell_coordinate, result_cell_coordinate)
+            if function_name == 'division':
+                division(sheet, cell_object.coordinate, second_cell_coordinate, result_cell_coordinate)
+            if function_name == 'compare':
+                compare(sheet, cell_object.coordinate, second_cell_coordinate, result_cell_coordinate)
+            result_row += 1
+        else:
+            if function_name == 'copy':
+                copy(sheet, cell_object.coordinate, second_cell_coordinate)
+            if function_name == 'move':
+                move(sheet, cell_object.coordinate, second_cell_coordinate)
+        second_row += 1
