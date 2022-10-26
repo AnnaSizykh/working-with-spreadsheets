@@ -1,3 +1,6 @@
+"""
+Functions called to change the table according to the user's request.
+"""
 import math
 import re
 
