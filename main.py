@@ -1,5 +1,9 @@
+"""
+A module that runs the program
+"""
+
 from pathlib import Path
-from query import query
+from query import user_query
 from workbook import Workbook
 
 if __name__ == "__main__":
@@ -7,5 +11,5 @@ if __name__ == "__main__":
     wb.open_file()
     wb.choose_worklist()
     ws = wb.get_worklist()
-    query(ws)
-    wb.get_wb().save(Path('.') / 'work' / f'{wb.get_file_name()}_result.xlsx')
+    user_query(ws)
+    wb.save()
