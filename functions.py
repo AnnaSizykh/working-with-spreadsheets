@@ -1,11 +1,16 @@
 import math
 import openpyxl
+import re
 
 
 def addition(sheet, left_corner, right_corner, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, left_corner) is None or re.match(cell_pattern, right_corner) is \
+            None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     summa = 0
-    for cell_object in sheet[left_corner: right_corner]:
-        for cell in cell_object:
+    for cell_column in sheet[left_corner: right_corner]:
+        for cell in cell_column:
             addend = cell.value
             if isinstance(addend, int) or isinstance(addend, float):
                 summa += addend
@@ -14,6 +19,10 @@ def addition(sheet, left_corner, right_corner, result_cell):
 
 
 def subtraction(sheet, reduced_cell, subtrahend_cell, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, reduced_cell) is None or re.match(cell_pattern, subtrahend_cell) is \
+            None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     reduced = sheet[reduced_cell].value
     subtrahend = sheet[subtrahend_cell].value
     if not (isinstance(reduced, int) or isinstance(reduced, float) or
@@ -26,9 +35,13 @@ def subtraction(sheet, reduced_cell, subtrahend_cell, result_cell):
 
 
 def multiplication(sheet, left_corner, right_corner, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, left_corner) is None or re.match(cell_pattern, right_corner) is \
+            None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     composition = 1
-    for cell_object in sheet[left_corner: right_corner]:
-        for cell in cell_object:
+    for cell_column in sheet[left_corner: right_corner]:
+        for cell in cell_column:
             factor = cell.value
             if isinstance(factor, int) or isinstance(factor, float):
                 composition *= factor
@@ -37,6 +50,10 @@ def multiplication(sheet, left_corner, right_corner, result_cell):
 
 
 def division(sheet, divisible_cell, divisor_cell, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, divisor_cell) is None or re.match(cell_pattern, divisible_cell) is \
+            None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     divisible = sheet[divisible_cell].value
     divisor = sheet[divisor_cell].value
     if not (isinstance(divisible, int) or isinstance(divisible, float) or
@@ -49,6 +66,9 @@ def division(sheet, divisible_cell, divisor_cell, result_cell):
 
 
 def round_number(sheet, number_cell, decimal, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, number_cell) is None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     number = sheet[number_cell].value
     if (isinstance(number, int) or isinstance(number, float)) and isinstance(decimal, int):
         rounded = round(number, decimal)
@@ -58,9 +78,12 @@ def round_number(sheet, number_cell, decimal, result_cell):
 
 
 def exponentiation(sheet, number_cell, extent, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, number_cell) is None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     number = sheet[number_cell].value
-    if not isinstance(number, int) or not isinstance(number, float) \
-            or not isinstance(extent, int) or not isinstance(extent, float):
+    if not (isinstance(number, int) and isinstance(number, float) and
+            isinstance(extent, int) and isinstance(extent, float)):
         sheet[result_cell] = 'N/A'
         return 'N/A'
     result = number ** extent
@@ -70,9 +93,12 @@ def exponentiation(sheet, number_cell, extent, result_cell):
 
 
 def logarithm(sheet, number_cell, base, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, number_cell) is None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     number = sheet[number_cell].value
-    if not isinstance(number, int) or not isinstance(number, float) or not isinstance(result_cell, int) or \
-            not isinstance(result_cell, float) or number < 0 or base < 0 or base == 1:
+    if (not (isinstance(number, int) and isinstance(number, float) and isinstance(result_cell, int)
+             and isinstance(result_cell, float))) or number < 0 or base < 0 or base == 1:
         sheet[result_cell] = 'N/A'
         return 'N/A'
     result = math.log(number, base)
@@ -81,10 +107,14 @@ def logarithm(sheet, number_cell, base, result_cell):
 
 
 def mean(sheet, left_corner, right_corner, result_cell):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, left_corner) is None or re.match(cell_pattern, right_corner) is \
+            None or re.match(cell_pattern, result_cell) is None:
+        return 'Coordinate error'
     counter = 0
     summa = 0
-    for cell_object in sheet[left_corner: right_corner]:
-        for cell in cell_object:
+    for cell_column in sheet[left_corner: right_corner]:
+        for cell in cell_column:
             addend = cell.value
             if isinstance(addend, int) or isinstance(addend, float):
                 summa += addend
@@ -92,28 +122,45 @@ def mean(sheet, left_corner, right_corner, result_cell):
     if counter == 0:
         sheet[result_cell] = 'N/A'
         return 'N/A'
-    result = summa/counter
+    result = summa / counter
     sheet[result_cell] = result
     return result
 
 
-def use_math_module():
-    pass
+def move(sheet, moved_left_corner, moved_right_corner, added_left_corner, added_right_corner):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, moved_left_corner) is None or re.match(cell_pattern, moved_right_corner) is \
+            None or re.match(cell_pattern, added_left_corner) is None \
+            or re.match(cell_pattern, added_right_corner) is None:
+        return 'Coordinate error'
+    paste_cut = sheet[added_left_corner : added_right_corner]
+    for ind_x, cell_column in enumerate(sheet[moved_left_corner : moved_right_corner]):
+        for ind_y, cell in enumerate(cell_column):
+            moved_value = cell.value
+            paste_cut[ind_x][ind_y] = moved_value
+            sheet[cell_moved] = ''
 
 
-def move(sheet, cell_moved, cell_added):
-    moved_value = sheet[cell_moved].value
-    sheet[cell_added] = moved_value
-    sheet[cell_moved] = ''
+def copy(sheet, copied_left_corner, copied_right_corner, added_left_corner, added_right_corner):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, copied_left_corner) is None or re.match(cell_pattern, copied_right_corner) is \
+            None or re.match(cell_pattern, added_left_corner) is None \
+            or re.match(cell_pattern, added_right_corner) is None:
+        return 'Coordinate error'
+    paste_cut = sheet[added_left_corner: added_right_corner]
+    for ind_x, cell_column in enumerate(sheet[copied_left_corner: copied_right_corner]):
+        for ind_y, cell in enumerate(cell_column):
+            copied_value = cell.value
+            paste_cut[ind_x][ind_y] = copied_value
 
 
-def copy(sheet, cell_copied, cell_pasted):
-    copied_value = sheet[cell_copied].value
-    sheet[cell_pasted] = copied_value
-
-
-def delete(sheet, cell_deleted):
-    sheet[cell_deleted] = ''
+def delete(sheet, left_corner, right_corner):
+    cell_pattern = re.compile('^[A-Z]+\d+$')
+    if re.match(cell_pattern, left_corner) is None or re.match(cell_pattern, right_corner) is None:
+        return 'Coordinate error'
+    for cell_column in sheet[left_corner : right_corner]:
+        for cell in cell_column:
+            cell = ''
 
 
 def compare(sheet, cell_1, cell_2, result_cell):
@@ -131,46 +178,7 @@ def find(sheet, element):
     similar_results = []
     for cell_object in sheet:
         for cell in cell_object:
-            if element == cell.value or element in cell.value:
+            if element == str(cell.value) or element in str(cell.value):
                 similar_results.append(cell.coordinate)
     if len(similar_results) != 0:
         return similar_results
-
-
-def sort(sheet, left_corner, right_corner):
-    pass
-
-
-def repeat_for_several_cells(sheet, function_name, first_start_cell, first_finish_cell, second_start_cell=None,
-                             result_start_cell=None, additional_var=None):
-    if sheet[first_start_cell].column != sheet[first_finish_cell].column:
-        return 'N/A'
-    result_row = None
-    result_column = None
-    second_row = 0
-    second_column = 0
-    if second_start_cell:
-        second_row = int(sheet[second_start_cell].row)
-        second_column = sheet[second_start_cell].column
-    for cell_object in sheet[first_start_cell: first_finish_cell]:
-        if function_name == 'delete':
-            delete(sheet, cell_object.coordinate)
-            continue
-        second_cell_coordinate = str(second_column) + str(second_row)
-        if result_start_cell:
-            result_row = int(sheet[result_start_cell].row)
-            result_column = sheet[result_start_cell].column
-            result_cell_coordinate = str(result_column) + str(result_row)
-            if function_name == 'subtraction':
-                subtraction(sheet, cell_object.coordinate, second_cell_coordinate, result_cell_coordinate)
-            if function_name == 'division':
-                division(sheet, cell_object.coordinate, second_cell_coordinate, result_cell_coordinate)
-            if function_name == 'compare':
-                compare(sheet, cell_object.coordinate, second_cell_coordinate, result_cell_coordinate)
-            result_row += 1
-        else:
-            if function_name == 'copy':
-                copy(sheet, cell_object.coordinate, second_cell_coordinate)
-            if function_name == 'move':
-                move(sheet, cell_object.coordinate, second_cell_coordinate)
-        second_row += 1
