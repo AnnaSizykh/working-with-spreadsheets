@@ -127,38 +127,38 @@ def mean(sheet, left_corner, right_corner, result_cell):
     return result
 
 
-def move(sheet, moved_left_corner, moved_right_corner, added_left_corner, added_right_corner):
+def move(sheet, moved_left_corner, moved_right_corner, added_left_corner):
     cell_pattern = re.compile('^[A-Z]+\d+$')
     if re.match(cell_pattern, moved_left_corner) is None or re.match(cell_pattern, moved_right_corner) is \
-            None or re.match(cell_pattern, added_left_corner) is None \
-            or re.match(cell_pattern, added_right_corner) is None:
+            None or re.match(cell_pattern, added_left_corner) is None:
         return 'Coordinate error'
-    paste_cut = sheet[added_left_corner : added_right_corner]
-    for ind_x, cell_column in enumerate(sheet[moved_left_corner : moved_right_corner]):
-        for ind_y, cell in enumerate(cell_column):
+    moving_column = sheet[added_left_corner].column
+    for ind_x, cell_column in enumerate(sheet[moved_left_corner: moved_right_corner]):
+        for cell in cell_column:
             moved_value = cell.value
             sheet.cell(row=ind_y+1, column=ind_x+1,  value=moved_value)
-            sheet[cell_moved] = ''
+            cell.value = ''
+        moving_column += 1
 
 
-def copy(sheet, copied_left_corner, copied_right_corner, added_left_corner, added_right_corner):
+def copy(sheet, copied_left_corner, copied_right_corner, added_left_corner):
     cell_pattern = re.compile('^[A-Z]+\d+$')
     if re.match(cell_pattern, copied_left_corner) is None or re.match(cell_pattern, copied_right_corner) is \
-            None or re.match(cell_pattern, added_left_corner) is None \
-            or re.match(cell_pattern, added_right_corner) is None:
+            None or re.match(cell_pattern, added_left_corner) is None:
         return 'Coordinate error'
-    paste_cut = sheet[added_left_corner: added_right_corner]
+    copy_column = sheet[added_left_corner].column
     for ind_x, cell_column in enumerate(sheet[copied_left_corner: copied_right_corner]):
-        for ind_y, cell in enumerate(cell_column):
+        for cell in cell_column:
             copied_value = cell.value
-            sheet.cell(row=ind_y+1, column=ind_x+1,  value=copied_value)
+            sheet.cell(row=ind_y+1, column=copy_column,  value=copied_value)
+        copy_column += 1
 
 
 def delete(sheet, left_corner, right_corner):
     cell_pattern = re.compile('^[A-Z]+\d+$')
     if re.match(cell_pattern, left_corner) is None or re.match(cell_pattern, right_corner) is None:
         return 'Coordinate error'
-    for cell_column in sheet[left_corner : right_corner]:
+    for cell_column in sheet[left_corner: right_corner]:
         for cell in cell_column:
             cell.value = ''
 
