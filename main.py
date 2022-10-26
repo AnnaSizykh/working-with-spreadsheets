@@ -8,4 +8,4 @@ if __name__ == "__main__":
     wb.choose_worklist()
     ws = wb.get_worklist()
     query(ws)
-    wb.get_wb().save(Path('.') / 'work' / 'result.xlsx')
+    wb.get_wb().save(Path('.') / 'work' / f'{wb.get_file_name()}_result.xlsx')
