@@ -34,24 +34,20 @@ def query(ws):
         elif query == 'mean':
             data = input('mean data description\n').split()
             functions.mean(ws, data[0], data[1], data[2])
-        elif query == 'math':
-            print('not implemented')
         elif query == 'move':
             data = input('move data description\n').split()
-            functions.move(ws, data[0], data[1])
+            functions.move(ws, data[0], data[1], data[2], data[3])
         elif query == 'copy':
             data = input('copy data description\n').split()
-            functions.copy(ws, data[0], data[1])
+            functions.copy(ws, data[0], data[1], data[2], data[3])
         elif query == 'delete':
-            data = input('delete data description\n')
-            functions.delete(ws, data)
+            data = input('delete data description\n').split()
+            functions.delete(ws, data[0], data[1])
         elif query == 'compare':
             data = input('compare data description\n').split()
             functions.compare(ws, data[0], data[1], data[2])
         elif query == 'find':
             data = input('find data description\n')
             print(functions.find(ws, str(data)))
-        elif query == 'sort':
-            print('not implemented')
         else:
             print(f'function "{query}" not found. Please, try again or print "qhelp" to see available functions.')
