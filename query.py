@@ -53,8 +53,5 @@ def query(ws):
             print(functions.find(ws, str(data)))
         elif query == 'sort':
             print('not implemented')
-        """elif query == 'repeat':
-            data = input('repeat data description\n')
-            functions.repeat_for_several_cells(ws, data[0], data[1], data[2], None, data[3])"""
         else:
             print(f'function "{query}" not found. Please, try again or print "qhelp" to see available functions.')
