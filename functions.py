@@ -137,7 +137,7 @@ def move(sheet, moved_left_corner, moved_right_corner, added_left_corner, added_
     for ind_x, cell_column in enumerate(sheet[moved_left_corner : moved_right_corner]):
         for ind_y, cell in enumerate(cell_column):
             moved_value = cell.value
-            sheet.cell(row=ind_y, column=ind_x,  value=moved_value)
+            sheet.cell(row=ind_y+1, column=ind_x+1,  value=moved_value)
             sheet[cell_moved] = ''
 
 
@@ -151,7 +151,7 @@ def copy(sheet, copied_left_corner, copied_right_corner, added_left_corner, adde
     for ind_x, cell_column in enumerate(sheet[copied_left_corner: copied_right_corner]):
         for ind_y, cell in enumerate(cell_column):
             copied_value = cell.value
-            sheet.cell(row=ind_y, column=ind_x,  value=copied_value)
+            sheet.cell(row=ind_y+1, column=ind_x+1,  value=copied_value)
 
 
 def delete(sheet, left_corner, right_corner):
