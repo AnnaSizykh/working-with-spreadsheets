@@ -3,7 +3,10 @@ import re
 import openpyxl
 
 
-def addition(sheet: Worksheet, left_corner: str, right_corner: str, result_cell: str):
+def addition(sheet, left_corner: str, right_corner: str, result_cell: str):
+    """
+    Sums every numeral in selected area.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, left_corner) is None \
             or re.match(cell_pattern, right_corner) is \
@@ -19,7 +22,10 @@ def addition(sheet: Worksheet, left_corner: str, right_corner: str, result_cell:
     return summa
 
 
-def subtraction(sheet: Worksheet, reduced_cell: str, subtrahend_cell: str, result_cell: str):
+def subtraction(sheet, reduced_cell: str, subtrahend_cell: str, result_cell: str):
+    """
+    Subtracts value of a second given cell from a first one.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, reduced_cell) is None \
             or re.match(cell_pattern, subtrahend_cell) is \
@@ -35,7 +41,10 @@ def subtraction(sheet: Worksheet, reduced_cell: str, subtrahend_cell: str, resul
     return difference
 
 
-def multiplication(sheet: Worksheet, left_corner: str, right_corner: str, result_cell: str):
+def multiplication(sheet, left_corner: str, right_corner: str, result_cell: str):
+    """
+    Multiplies every numeral in selected area.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, left_corner) is None \
             or re.match(cell_pattern, right_corner) is \
@@ -51,7 +60,10 @@ def multiplication(sheet: Worksheet, left_corner: str, right_corner: str, result
     return composition
 
 
-def division(sheet: Worksheet, divisible_cell: str, divisor_cell: str, result_cell: str):
+def division(sheet, divisible_cell: str, divisor_cell: str, result_cell: str):
+    """
+    Divides value of a first given cell on a first one.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, divisor_cell) is None \
             or re.match(cell_pattern, divisible_cell) is \
@@ -68,7 +80,10 @@ def division(sheet: Worksheet, divisible_cell: str, divisor_cell: str, result_ce
     return quotient
 
 
-def round_number(sheet: Worksheet, number_cell: str, decimal: int, result_cell: str):
+def round_number(sheet, number_cell: str, decimal: int, result_cell: str):
+    """
+    Rounds a numeral in given cell.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, number_cell) is None or re.match(cell_pattern, result_cell) is None:
         return 'Coordinate error'
@@ -80,7 +95,10 @@ def round_number(sheet: Worksheet, number_cell: str, decimal: int, result_cell: 
     return number
 
 
-def exponentiation(sheet: Worksheet, number_cell: str, extent: (int, float), result_cell: str):
+def exponentiation(sheet, number_cell: str, extent: (int, float), result_cell: str):
+    """
+    Raises a numeral in cell to a given pover.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, number_cell) is None \
             or re.match(cell_pattern, result_cell) is None:
@@ -94,7 +112,10 @@ def exponentiation(sheet: Worksheet, number_cell: str, extent: (int, float), res
     return result
 
 
-def logarithm(sheet: Worksheet, number_cell: str, base: (float, int), result_cell: str):
+def logarithm(sheet, number_cell: str, base: (float, int), result_cell: str):
+    """
+    Calculates a logarithm using a number in the cell and a given base.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, number_cell) is None \
             or re.match(cell_pattern, result_cell) is None:
@@ -109,7 +130,10 @@ def logarithm(sheet: Worksheet, number_cell: str, base: (float, int), result_cel
     return result
 
 
-def mean(sheet: Worksheet, left_corner: str, right_corner: str, result_cell: str):
+def mean(sheet, left_corner: str, right_corner: str, result_cell: str):
+    """
+    Finds the mean between all numerals in a given area.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, left_corner) is None \
             or re.match(cell_pattern, right_corner) is \
@@ -131,7 +155,10 @@ def mean(sheet: Worksheet, left_corner: str, right_corner: str, result_cell: str
     return result
 
 
-def move(sheet: Worksheet, moved_left_corner: str, moved_right_corner: str, added_left_corner: str):
+def move(sheet, moved_left_corner: str, moved_right_corner: str, added_left_corner: str):
+    """
+    Moves values from one area to another.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, moved_left_corner) is None or \
             re.match(cell_pattern, moved_right_corner) is None \
@@ -148,7 +175,10 @@ def move(sheet: Worksheet, moved_left_corner: str, moved_right_corner: str, adde
         moving_column += 1
 
 
-def copy(sheet: Worksheet, copied_left_corner: str, copied_right_corner: str, added_left_corner: str):
+def copy(sheet, copied_left_corner: str, copied_right_corner: str, added_left_corner: str):
+    """
+       Copies values from one area to another.
+       """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, copied_left_corner) is None \
             or re.match(cell_pattern, copied_right_corner) is \
@@ -164,7 +194,10 @@ def copy(sheet: Worksheet, copied_left_corner: str, copied_right_corner: str, ad
         copy_column += 1
 
 
-def delete(sheet: Worksheet, left_corner: str, right_corner: str):
+def delete(sheet, left_corner: str, right_corner: str):
+    """
+    Clears all cells in a given area.
+    """
     cell_pattern = re.compile('^[A-Z]+[1-9]{1}[0-9]*$')
     if re.match(cell_pattern, left_corner) is None \
             or re.match(cell_pattern, right_corner) is None:
@@ -174,7 +207,10 @@ def delete(sheet: Worksheet, left_corner: str, right_corner: str):
             cell.value = ''
 
 
-def compare(sheet: Worksheet, cell_1: str, cell_2: str, result_cell: str):
+def compare(sheet, cell_1: str, cell_2: str, result_cell: str):
+    """
+    Compares values from tro cells
+    """
     value_1 = sheet[cell_1].value
     value_2 = sheet[cell_2].value
     if value_1 == value_2:
@@ -185,7 +221,10 @@ def compare(sheet: Worksheet, cell_1: str, cell_2: str, result_cell: str):
         return False
 
 
-def find(sheet: Worksheet, element: str):
+def find(sheet, element: str):
+    """
+    Finds an element in cells.
+    """
     similar_results = []
     for cell_object in sheet:
         for cell in cell_object:
