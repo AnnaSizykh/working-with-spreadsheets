@@ -1,6 +1,5 @@
 import math
 import re
-import openpyxl
 
 
 def addition(sheet, left_corner: str, right_corner: str, result_cell: str):
@@ -72,7 +71,7 @@ def division(sheet, divisible_cell: str, divisor_cell: str, result_cell: str):
     divisible = sheet[divisible_cell].value
     divisor = sheet[divisor_cell].value
     if not (isinstance(divisible, (float, int))
-            and isinstance(divisor, (float, integer))) or divisor == 0:
+            and isinstance(divisor, (float, int))) or divisor == 0:
         sheet[result_cell] = 'N/A'
         return 'N/A'
     quotient = divisible / divisor
@@ -173,6 +172,7 @@ def move(sheet, moved_left_corner: str, moved_right_corner: str, added_left_corn
             cell.value = ''
             moving_row += 1
         moving_column += 1
+    return 'successful'
 
 
 def copy(sheet, copied_left_corner: str, copied_right_corner: str, added_left_corner: str):
@@ -192,6 +192,7 @@ def copy(sheet, copied_left_corner: str, copied_right_corner: str, added_left_co
             sheet.cell(row=copy_row, column=copy_column,  value=copied_value)
             copy_row += 1
         copy_column += 1
+    return 'successful'
 
 
 def delete(sheet, left_corner: str, right_corner: str):
@@ -205,6 +206,7 @@ def delete(sheet, left_corner: str, right_corner: str):
     for cell_column in sheet[left_corner: right_corner]:
         for cell in cell_column:
             cell.value = ''
+    return 'successful'
 
 
 def compare(sheet, cell_1: str, cell_2: str, result_cell: str):
@@ -216,9 +218,8 @@ def compare(sheet, cell_1: str, cell_2: str, result_cell: str):
     if value_1 == value_2:
         sheet[result_cell] = True
         return True
-    else:
-        sheet[result_cell] = False
-        return False
+    sheet[result_cell] = False
+    return False
 
 
 def find(sheet, element: str):
@@ -232,3 +233,4 @@ def find(sheet, element: str):
                 similar_results.append(cell.coordinate)
     if len(similar_results) != 0:
         return similar_results
+    return 'no matches'
