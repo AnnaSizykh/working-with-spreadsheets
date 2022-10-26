@@ -160,7 +160,7 @@ def delete(sheet, left_corner, right_corner):
         return 'Coordinate error'
     for cell_column in sheet[left_corner : right_corner]:
         for cell in cell_column:
-            cell = ''
+            cell.value = ''
 
 
 def compare(sheet, cell_1, cell_2, result_cell):
