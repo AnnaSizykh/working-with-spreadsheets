@@ -18,12 +18,6 @@ class Workbook:
         self.wb = openpyxl.load_workbook(Path('.') / 'work' / f'{self.get_file_name()}.xlsx')
         self.sheets = self.wb.sheetnames
 
-    def get_file_name(self):
-        return self.wb_name
-
-    def get_sheets_names(self):
-        return self.sheets
-
     def choose_worklist(self):
         while self.ws is None:
             choose_ws = input(f'The file "{self.get_file_name()}" contains the next spreadsheets: {self.get_sheets_names()}\n'
@@ -31,11 +25,23 @@ class Workbook:
             if choose_ws == 'stop':
                 break
             try:
-                self.ws = self.get_sheets_names()[int(choose_ws) - 1]
+                self.ws = self.get_wb()[self.get_sheets_names()[int(choose_ws) - 1]]
             except IndexError:
                 print('List index out of range. Please, try again or enter "stop" to stop searching.')
             except ValueError:
                 if choose_ws not in self.get_sheets_names():
                     print('The sheet you are looking for was not found. Please, try again or enter "stop" to stop searching.')
                 else:
-                    self.ws = choose_ws
+                    self.ws = self.get_wb()[choose_ws]
+
+    def get_wb(self):
+        return self.wb
+    
+    def get_file_name(self):
+        return self.wb_name
+
+    def get_sheets_names(self):
+        return self.sheets
+
+    def get_worklist(self):
+        return self.ws
