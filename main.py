@@ -1,3 +1,7 @@
+"""
+A program launcher that is responsible for working with file
+"""
+
 from pathlib import Path
 from query import query
 from workbook import Workbook
