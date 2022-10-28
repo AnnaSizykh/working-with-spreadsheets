@@ -93,7 +93,7 @@ class Functions:
             if not isinstance(cell, str):
                 return -1
             if re.match(cell_pattern, cell) is None:
-                return 1
+                return -1
         return 0
 
     def get_function_name(self):  # UNNECESSARY
