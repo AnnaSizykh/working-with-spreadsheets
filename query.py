@@ -26,14 +26,14 @@ class Query:
             self.input_query()
             if self.get_query() is None:
                 return -1
-            elif self.get_query() == 'stop':
+            if self.get_query() == 'stop':
                 self.workbook.save()
                 return 0
-            elif not self.get_query():
+            if not self.get_query():
                 print(self.empty_query())
-            elif self.get_query() == 'help':
+            if self.get_query() == 'help':
                 print(self.get_help())
-            elif self.get_query() == 'change':
+            if self.get_query() == 'change':
                 if self.workbook.choose_worklist() is None:
                     break
             else:
@@ -68,4 +68,3 @@ class Query:
         Returns message for empty query
         """
         return self.empty_query_message
-
