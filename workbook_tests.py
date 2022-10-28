@@ -40,4 +40,5 @@ class WorkbookTests(unittest.TestCase):
         saved_file = Path('.') / 'work' / 'test_result.xlsx'
         if saved_file.exists():
             actual = True
+        saved_file.unlink()
         self.assertEqual(expected, actual)
