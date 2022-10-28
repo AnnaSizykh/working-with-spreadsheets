@@ -69,7 +69,7 @@ class CellPatternCheckTest(unittest.TestCase):
         """
         Test cell pattern checker handles incorrect inputs
         """
-        expected = 1
+        expected = -1
         for incorrect_input in self.incorrect_inputs:
             actual = self.test_function.cell_pattern_check(incorrect_input)
             self.assertEqual(expected, actual)
@@ -78,7 +78,7 @@ class CellPatternCheckTest(unittest.TestCase):
         """
         Test cell pattern checker detects incorrect inputs
         """
-        expected = 1
+        expected = -1
         actual = self.test_function.cell_pattern_check(self.correct_inputs[0],
                                                        self.correct_inputs[1],
                                                        self.incorrect_inputs[2],
