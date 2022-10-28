@@ -11,7 +11,7 @@ class Query:
     """
     def __init__(self, workbook):
         self.query = None
-        self.help_message = ''' 
+        self.help_message = '''
 If you want to complete the session type - stop.
 
         
