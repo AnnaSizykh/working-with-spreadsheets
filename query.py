@@ -15,6 +15,7 @@ class Query:
         self.empty_query_message = 'Empty query. Type "help" for instructions.'
         self.called_function = None
         self.workbook = workbook
+        self.called_function_result = None
 
     def run(self):
         """
@@ -38,9 +39,10 @@ class Query:
                     break
             else:
                 self.called_function = Functions(self.get_query(), self.workbook.get_worklist())
-                if self.called_function.run() == 1:
+                self.called_function_result = self.called_function.run()
+                if self.get_called_func_result() == 1:
                     print('No such function. Type "help" to get a list of available functions')
-                elif self.called_function.run() == -1:
+                elif self.get_called_func_result() == -1:
                     print('Oops, something went wrong.')
                     return -1
         return 0
@@ -68,3 +70,10 @@ class Query:
         Returns message for empty query
         """
         return self.empty_query_message
+
+    def get_called_func_result(self):
+        """
+        Returns result of called function work.
+        Used for check of function work correctness
+        """
+        return self.called_function_result
