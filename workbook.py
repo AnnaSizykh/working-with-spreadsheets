@@ -3,6 +3,7 @@ Workbook class implementation
 """
 
 from pathlib import Path
+
 import openpyxl
 
 
@@ -21,13 +22,17 @@ class Workbook:
         """
         Opens an excel file from a working directory
         """
-        self.wb_name = input('Input file name')
-        if not self.get_file_name():
-            self.wb_name = 'demo'
-        if Path(fr'.\work\{self.get_file_name()}.xlsx').exists() is False:
-            raise FileNotFoundError("The file you're looking for does not exist")
-        self.work_book = openpyxl.load_workbook(Path('.') / 'work' / f'{self.get_file_name()}.xlsx')
-        self.sheets = self.work_book.sheetnames
+        while self.wb_name is None:
+            self.wb_name = input('Input file name')
+            if not self.wb_name:
+                self.wb_name = 'demo'
+            if Path(fr'.\work\{self.get_file_name()}.xlsx').exists() is False:
+                print('A file you are looking for does not exists')
+                self.wb_name = None
+            else:
+                self.work_book = openpyxl.load_workbook(Path('.') / 'work' / 
+                                                        f'{self.get_file_name()}.xlsx')
+                self.sheets = self.work_book.sheetnames
 
     def choose_worklist(self):
         """
