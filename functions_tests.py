@@ -16,13 +16,7 @@ class DefineFunctionsTest(unittest.TestCase):
 
     def setUp(self):
         self.test_sheet = openpyxl.load_workbook(Path('.') / 'tests' / 'test' / 'test.xlsx').active
-        self.functions_types = {'counting functions':
-                                ['add', 'sub', 'multi', 'div', 'mean'],
-                                'difficult functions': ['rounded', 'expo', 'log'],
-                                'moving functions': ['move', 'copy'],
-                                'delete function': ['delete'],
-                                'compare function': ['compare'],
-                                'searching function': ['find']}
+        self.functions_types = Functions('add', self.test_sheet).function_types
         self.bad_inputs = ['string', 1, 0.5, [], {}, (), None, [None]]
 
     def test_function_class_defines_functions(self):
@@ -61,26 +55,40 @@ class CellPatternCheckTest(unittest.TestCase):
         self.test_function = Functions('add', self.test_sheet)
 
     def test_cell_pattern_check_correct_inputs(self):
+        """
+        Test cell pattern checker works correctly
+        """
         expected = 0
-        actual = self.test_function.cell_pattern_check(self.correct_inputs[0], self.correct_inputs[1],
-                                                  self.correct_inputs[2], self.correct_inputs[3])
+        actual = self.test_function.cell_pattern_check(self.correct_inputs[0],
+                                                       self.correct_inputs[1],
+                                                       self.correct_inputs[2],
+                                                       self.correct_inputs[3])
         self.assertEqual(expected, actual)
 
     def test_cell_pattern_check_incorrect_inputs(self):
+        """
+        Test cell pattern checker handles incorrect inputs
+        """
         expected = 1
         for incorrect_input in self.incorrect_inputs:
             actual = self.test_function.cell_pattern_check(incorrect_input)
             self.assertEqual(expected, actual)
 
     def test_cell_pattern_check_correct_incorrect_inputs(self):
+        """
+        Test cell pattern checker detects incorrect inputs
+        """
         expected = 1
         actual = self.test_function.cell_pattern_check(self.correct_inputs[0],
-                                                  self.correct_inputs[1],
-                                                  self.incorrect_inputs[2],
-                                                  self.correct_inputs[3])
+                                                       self.correct_inputs[1],
+                                                       self.incorrect_inputs[2],
+                                                       self.correct_inputs[3])
         self.assertEqual(expected, actual)
 
     def test_cell_pattern_check_bad_inputs(self):
+        """
+        Test cell pattern checker handles bad inputs
+        """
         expected = -1
         for bad_input in self.bad_inputs:
             actual = self.test_function.cell_pattern_check(bad_input)
