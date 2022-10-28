@@ -54,7 +54,7 @@ class Workbook:
                 else:
                     self.work_sheet = self.get_wb()[choose_ws]
                     break
-        print(f'Current worksheet is {self.get_worklist()}')
+        print(f'Current worksheet is {self.get_worklist().title}')
         return 0
 
     def save(self):
