@@ -12,7 +12,7 @@ class Functions:
     Capable of searching and storing info about functions.
     Runs functions logic
     """
-    def __init__(self, function_name, sheet):
+    def __init__(self, function_name: str, sheet):
         self.called_type = None
         self.func_name = function_name
         self.function = None
@@ -35,7 +35,7 @@ class Functions:
             return 1
         if self.function_call() == -1:
             return 1
-        if self.get_function().run() == -1:
+        if self.function.run() == -1:
             return -1
         return 0
 
@@ -44,29 +44,29 @@ class Functions:
         Defines a type of function relying on user's input
         """
         for function_type in self.function_types:
-            if self.get_function_name() in self.function_types.get(function_type):
+            if self.func_name in self.function_types.get(function_type):
                 self.called_type = function_type
                 return 0
         return -1
 
     def function_call(self):
         """
-        Defines a functions' class that might be executed
+        Defines a functions' class that should be executed
         """
-        if self.get_called_type() is None:
+        if self.called_type is None:
             return -1
-        if self.get_called_type() == 'counting functions':
-            self.function = CountingFunctions(self.get_function_name(), self.get_worksheet())
-        elif self.get_called_type() == 'difficult functions':
-            self.function = DifficultFunctions(self.get_function_name(), self.get_worksheet())
-        elif self.get_called_type() == 'moving functions':
-            self.function = MovingFunctions(self.get_function_name(), self.get_worksheet())
-        elif self.get_called_type() == 'delete function':
-            self.function = DeleteFunction(self.get_function_name(), self.get_worksheet())
-        elif self.get_called_type() == 'compare function':
-            self.function = CompareFunction(self.get_function_name(), self.get_worksheet())
-        elif self.get_called_type() == 'searching function':
-            self.function = SearchingFunction(self.get_function_name(), self.get_worksheet())
+        if self.called_type == 'counting functions':
+            self.function = CountingFunctions(self.func_name, self.get_worksheet())
+        elif self.called_type == 'difficult functions':
+            self.function = DifficultFunctions(self.func_name, self.get_worksheet())
+        elif self.called_type == 'moving functions':
+            self.function = MovingFunctions(self.func_name, self.get_worksheet())
+        elif self.called_type == 'delete function':
+            self.function = DeleteFunction(self.func_name, self.get_worksheet())
+        elif self.called_type == 'compare function':
+            self.function = CompareFunction(self.func_name, self.get_worksheet())
+        elif self.called_type == 'searching function':
+            self.function = SearchingFunction(self.func_name, self.get_worksheet())
         else:
             return -1
         return 0
@@ -88,15 +88,15 @@ class Functions:
         """
         Checks the correctness of user's cells coordinates input
         """
-        cell_pattern = re.compile(r'^[A-Z]+\d+$')
+        cell_pattern = re.compile(r'^[A-Z]+[1-9][0-9]*$')
         for cell in args:
             if not isinstance(cell, str):
                 return -1
             if re.match(cell_pattern, cell) is None:
-                return -1
+                return 1
         return 0
 
-    def get_function_name(self):
+    def get_function_name(self):  # UNNECESSARY
         """
         Returns user's input
         """
@@ -108,7 +108,7 @@ class Functions:
         """
         return self.called_type
 
-    def get_function(self):
+    def get_function(self):  # UNNECESSARY
         """
         Returns a chosen class
         """
@@ -153,19 +153,19 @@ class CountingFunctions(Functions):
         """
         Defines a function that might be executed and executes it
         """
-        if self.get_function_name() == 'add':
+        if self.func_name == 'add':
             self.addition(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        if self.get_function_name() == 'sub':
+        if self.func_name == 'sub':
             self.subtraction(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        if self.get_function_name() == 'multi':
+        if self.func_name == 'multi':
             self.multiplication(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        if self.get_function_name() == 'div':
+        if self.func_name == 'div':
             self.division(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        if self.get_function_name() == 'mean':
+        if self.func_name == 'mean':
             self.mean(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
         return -1
@@ -182,6 +182,9 @@ class CountingFunctions(Functions):
         """
         if self.variables is None or len(self.variables) != 3:
             return -1
+        for variable in self.variables:
+            if not isinstance(variable, str) or not variable:
+                return -1
         self.left_cell = self.get_variables()[0]
         self.right_cell = self.get_variables()[1]
         self.result_cell = self.get_variables()[2]
@@ -291,13 +294,13 @@ class DifficultFunctions(Functions):
         """
         Defines a function that might be executed and executes it
         """
-        if self.get_function_name() == 'rounded':
+        if self.func_name == 'rounded':
             self.round_number(self.sheet, self.cell, self.number, self.result_cell)
             return 0
-        if self.get_function_name() == 'expo':
+        if self.func_name == 'expo':
             self.exponentiation(self.sheet, self.cell, self.number, self.result_cell)
             return 0
-        if self.get_function_name() == 'log':
+        if self.func_name == 'log':
             self.logarithm(self.sheet, self.cell, self.number, self.result_cell)
             return 0
         return -1
@@ -314,6 +317,9 @@ class DifficultFunctions(Functions):
         """
         if self.variables is None or len(self.variables) != 3:
             return -1
+        for variable in self.variables:
+            if not isinstance(variable, (str, int, float)) or not variable:
+                return -1
         self.cell = self.get_variables()[0]
         self.number = int(self.get_variables()[1])
         self.result_cell = self.get_variables()[2]
@@ -350,7 +356,7 @@ class DifficultFunctions(Functions):
         Calculates a logarithm using a number in the cell and a given base.
         """
         number = sheet[number_cell].value
-        if (not (isinstance(number, (float, int)) and isinstance(result_cell, (float, int)))) \
+        if (not (isinstance(number, (float, int)) and isinstance(base, (float, int)))) \
                 or number < 0 or base < 0 or base == 1:
             sheet[result_cell] = 'N/A'
             return 'N/A'
@@ -385,10 +391,10 @@ class MovingFunctions(Functions):
         """
         Defines a function that might be executed and executes it
         """
-        if self.get_function_name() == 'move':
+        if self.func_name == 'move':
             self.move(self.sheet, self.left_corner, self.right_corner, self.result_cell)
             return 0
-        if self.get_function_name() == 'copy':
+        if self.func_name == 'copy':
             self.copy(self.sheet, self.left_corner, self.right_corner, self.result_cell)
             return 0
         return -1
@@ -405,6 +411,9 @@ class MovingFunctions(Functions):
         """
         if self.variables is None or len(self.variables) != 3:
             return -1
+        for variable in self.variables:
+            if not isinstance(variable, str) or not variable:
+                return -1
         self.left_corner = self.get_variables()[0]
         self.right_corner = self.get_variables()[1]
         self.result_cell = self.get_variables()[2]
@@ -468,7 +477,7 @@ class DeleteFunction(Functions):
         """
         Executes a function
         """
-        if self.get_function_name() == 'delete':
+        if self.func_name == 'delete':
             self.delete(self.sheet, self.left_corner, self.right_corner)
             return 0
         return -1
@@ -485,6 +494,9 @@ class DeleteFunction(Functions):
         """
         if self.variables is None or len(self.variables) != 2:
             return -1
+        for variable in self.variables:
+            if not isinstance(variable, str) or not variable:
+                return -1
         self.left_corner = self.get_variables()[0]
         self.right_corner = self.get_variables()[1]
         return 0
@@ -526,7 +538,7 @@ class CompareFunction(Functions):
         """
         Executes a function
         """
-        if self.get_function_name() == 'compare':
+        if self.func_name == 'compare':
             self.compare(self.sheet, self.cell_1, self.cell_2, self.result_cell)
             return 0
         return -1
@@ -543,6 +555,9 @@ class CompareFunction(Functions):
         """
         if self.variables is None or len(self.variables) != 3:
             return -1
+        for variable in self.variables:
+            if not isinstance(variable, str) or not variable:
+                return -1
         self.cell_1 = self.get_variables()[0]
         self.cell_2 = self.get_variables()[1]
         self.result_cell = self.get_variables()[2]
@@ -585,7 +600,7 @@ class SearchingFunction(Functions):
         """
         Executes a function
         """
-        if self.get_function_name() == 'find':
+        if self.func_name == 'find':
             self.find(self.sheet, self.element)
             return 0
         return -1
@@ -602,6 +617,9 @@ class SearchingFunction(Functions):
         """
         if self.variables is None or len(self.variables) != 1:
             return -1
+        for variable in self.variables:
+            if not isinstance(variable, str) or not variable:
+                return -1
         self.element = self.get_variables()[0]
         return 0
 
