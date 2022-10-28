@@ -55,22 +55,22 @@ class Functions:
         """
         if self.get_called_type() is None:
             return -1
-        elif self.get_called_type() == 'counting functions':
+        if self.get_called_type() == 'counting functions':
             self.function = CountingFunctions(self.get_function_name(), self.get_worksheet())
             return 0
-        elif self.get_called_type() == 'difficult functions':
+        if self.get_called_type() == 'difficult functions':
             self.function = DifficultFunctions(self.get_function_name(), self.get_worksheet())
             return 0
-        elif self.get_called_type() == 'moving functions':
+        if self.get_called_type() == 'moving functions':
             self.function = MovingFunctions(self.get_function_name(), self.get_worksheet())
             return 0
-        elif self.get_called_type() == 'delete function':
+        if self.get_called_type() == 'delete function':
             self.function = DeleteFunction(self.get_function_name(), self.get_worksheet())
             return 0
-        elif self.get_called_type() == 'compare function':
+        if self.get_called_type() == 'compare function':
             self.function = CompareFunction(self.get_function_name(), self.get_worksheet())
             return 0
-        elif self.get_called_type() == 'searching function':
+        if self.get_called_type() == 'searching function':
             self.function = SearchingFunction(self.get_function_name(), self.get_worksheet())
             return 0
         return -1
@@ -160,16 +160,16 @@ class CountingFunctions(Functions):
         if self.get_function_name() == 'add':
             self.addition(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        elif self.get_function_name() == 'sub':
+        if self.get_function_name() == 'sub':
             self.subtraction(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        elif self.get_function_name() == 'multi':
+        if self.get_function_name() == 'multi':
             self.multiplication(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        elif self.get_function_name() == 'div':
+        if self.get_function_name() == 'div':
             self.division(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
-        elif self.get_function_name() == 'mean':
+        if self.get_function_name() == 'mean':
             self.mean(self.sheet, self.left_cell, self.right_cell, self.result_cell)
             return 0
         return -1
@@ -298,10 +298,10 @@ class DifficultFunctions(Functions):
         if self.get_function_name() == 'rounded':
             self.round_number(self.sheet, self.cell, self.number, self.result_cell)
             return 0
-        elif self.get_function_name() == 'expo':
+        if self.get_function_name() == 'expo':
             self.exponentiation(self.sheet, self.cell, self.number, self.result_cell)
             return 0
-        elif self.get_function_name() == 'log':
+        if self.get_function_name() == 'log':
             self.logarithm(self.sheet, self.cell, self.number, self.result_cell)
             return 0
         return -1
@@ -392,7 +392,7 @@ class MovingFunctions(Functions):
         if self.get_function_name() == 'move':
             self.move(self.sheet, self.left_corner, self.right_corner, self.result_cell)
             return 0
-        elif self.get_function_name() == 'copy':
+        if self.get_function_name() == 'copy':
             self.copy(self.sheet, self.left_corner, self.right_corner, self.result_cell)
             return 0
         return -1
