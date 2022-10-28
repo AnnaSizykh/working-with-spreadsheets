@@ -23,11 +23,17 @@ class WorkbookTests(unittest.TestCase):
         self.test_workbook.wb_name = 'test'
 
     def test_choose_existing_worklist(self):
+        """
+        Test existing worklist can be chosen
+        """
         expected = self.test_workbook.get_worklist().title
         actual = openpyxl.load_workbook(Path('.') / 'tests' / 'test' / 'test.xlsx').active.title
         self.assertEqual(expected, actual)
 
     def test_save_file(self):
+        """
+        Test file saving
+        """
         expected = True
         actual = False
         self.test_workbook.save()
@@ -35,4 +41,3 @@ class WorkbookTests(unittest.TestCase):
         if saved_file.exists():
             actual = True
         self.assertEqual(expected, actual)
-
