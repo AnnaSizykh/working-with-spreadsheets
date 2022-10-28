@@ -57,23 +57,19 @@ class Functions:
             return -1
         if self.get_called_type() == 'counting functions':
             self.function = CountingFunctions(self.get_function_name(), self.get_worksheet())
-            return 0
-        if self.get_called_type() == 'difficult functions':
+        elif self.get_called_type() == 'difficult functions':
             self.function = DifficultFunctions(self.get_function_name(), self.get_worksheet())
-            return 0
-        if self.get_called_type() == 'moving functions':
+        elif self.get_called_type() == 'moving functions':
             self.function = MovingFunctions(self.get_function_name(), self.get_worksheet())
-            return 0
-        if self.get_called_type() == 'delete function':
+        elif self.get_called_type() == 'delete function':
             self.function = DeleteFunction(self.get_function_name(), self.get_worksheet())
-            return 0
-        if self.get_called_type() == 'compare function':
+        elif self.get_called_type() == 'compare function':
             self.function = CompareFunction(self.get_function_name(), self.get_worksheet())
-            return 0
-        if self.get_called_type() == 'searching function':
+        elif self.get_called_type() == 'searching function':
             self.function = SearchingFunction(self.get_function_name(), self.get_worksheet())
-            return 0
-        return -1
+        else:
+            return -1
+        return 0
 
     def set_variables(self):
         """
