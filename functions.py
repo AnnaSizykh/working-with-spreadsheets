@@ -174,7 +174,8 @@ class CountingFunctions(Functions):
         """
         Gets variables from user
         """
-        self.variables = input('Counting functions variables description').split()
+        self.variables = input('''Type coordinates of the cells accordingly: 
+        <first_cell> <last_cell> <output>: ''').split()
 
     def get_attributes(self):
         """
@@ -309,7 +310,8 @@ class DifficultFunctions(Functions):
         """
         Gets variables from user
         """
-        self.variables = input('Difficult functions variables description').split()
+        self.variables = input('''Type coordinates of the cells accordingly: 
+        <input_cell> <base, decimal or extent (digits only)> <output>: ''').split()
 
     def get_attributes(self):
         """
@@ -403,7 +405,8 @@ class MovingFunctions(Functions):
         """
         Gets variables from user
         """
-        self.variables = input('Moving functions variables description').split()
+        self.variables = input('''Type coordinates of the cells accordingly: 
+        <top_corner> <bottom_corner> <output_top_corner>: ''').split()
 
     def get_attributes(self):
         """
@@ -486,7 +489,8 @@ class DeleteFunction(Functions):
         """
         Gets variables from user
         """
-        self.variables = input('Delete function variables description').split()
+        self.variables = input('''Type coordinates of the cells accordingly: 
+        <input_cell>: ''').split()
 
     def get_attributes(self):
         """
@@ -547,7 +551,8 @@ class CompareFunction(Functions):
         """
         Gets variables from user
         """
-        self.variables = input('Compare function variables description').split()
+        self.variables = input('''Type coordinates of the cells accordingly: 
+        <first_cell> <second_cell> <output>: ''').split()
 
     def get_attributes(self):
         """
@@ -609,7 +614,8 @@ class SearchingFunction(Functions):
         """
         Gets variables from user
         """
-        self.variables = input('Find function variables description').split()
+        self.variables = input('''Type coordinates of the cells accordingly: 
+        <element>: ''').split()
 
     def get_attributes(self):
         """
@@ -634,5 +640,6 @@ class SearchingFunction(Functions):
                 if element == str(cell.value) or element in str(cell.value):
                     similar_results.append(cell.coordinate)
         if len(similar_results) != 0:
+            print('Element is found in these cells:', similar_results)
             return similar_results
         return 'no matches'

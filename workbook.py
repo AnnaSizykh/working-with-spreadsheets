@@ -23,7 +23,7 @@ class Workbook:
         Opens an excel file from a working directory
         """
         while self.wb_name is None:
-            self.wb_name = input('Input file name')
+            self.wb_name = input('Input file name: ')
             if not self.wb_name:
                 self.wb_name = 'demo'
             if Path(fr'.\work\{self.get_file_name()}.xlsx').exists() is False:

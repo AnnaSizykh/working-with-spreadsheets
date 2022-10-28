@@ -11,7 +11,30 @@ class Query:
     """
     def __init__(self, workbook):
         self.query = None
-        self.help_message = 'Help message.'
+        self.help_message = ''' 
+If you want to complete the session type - stop.
+
+        
+These are available functions: 
+        
+To add up all numeric values in the selected area type: add
+Tu subtract numeric value type: sub
+To multiply all numeric values in the selected type: multi 
+To divide numeric value type: div
+To calculate the arithmetic mean type: mean
+To raise a number in a cell to a degree type: expo 
+To round to the number type: rounded
+To calculate the logarithm of the numeric value type: log
+To move values from one area to another type: move
+To copy values from one area to another type: copy
+To delete data from cell type: del
+To compare of cell values type: compare
+To search for a specific element in the table type: find
+
+Type coordinate of a cell as they are, without additional symbols. 
+Good example: A21
+Bad example: AK-47
+'''
         self.empty_query_message = 'Empty query. Type "help" for instructions.'
         self.called_function = None
         self.workbook = workbook
@@ -44,6 +67,8 @@ class Query:
                     print('No such function. Type "help" to get a list of available functions')
                 elif self.get_called_func_result() == -1:
                     print('Oops, something went wrong.')
+                elif self.get_called_func_result() == 0:
+                    print('Action completed')
         return 0
 
     def input_query(self):
