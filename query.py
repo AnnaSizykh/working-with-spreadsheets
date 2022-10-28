@@ -44,7 +44,6 @@ class Query:
                     print('No such function. Type "help" to get a list of available functions')
                 elif self.get_called_func_result() == -1:
                     print('Oops, something went wrong.')
-                    return -1
         return 0
 
     def input_query(self):
