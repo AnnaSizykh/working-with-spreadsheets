@@ -30,7 +30,7 @@ class Workbook:
                 print('A file you are looking for does not exists')
                 self.wb_name = None
             else:
-                self.work_book = openpyxl.load_workbook(Path('.') / 'work' / 
+                self.work_book = openpyxl.load_workbook(Path('.') / 'work' /
                                                         f'{self.get_file_name()}.xlsx')
                 self.sheets = self.work_book.sheetnames
 
